@@ -140,6 +140,7 @@
     <xs:element name="ResourcesRequest">
         <xs:complexType>
             <xs:sequence>
+                <xs:element name="Parent" type="Resource"/>
                 <xs:element name="Resource" maxOccurs="unbounded" type="Resource"/>
             </xs:sequence>
         </xs:complexType>

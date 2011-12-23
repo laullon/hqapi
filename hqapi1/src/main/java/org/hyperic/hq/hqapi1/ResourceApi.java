@@ -532,6 +532,28 @@ public class ResourceApi extends BaseApi {
     }
 
     /**
+     * Sync a list of {@link org.hyperic.hq.hqapi1.types.Resource}s in a platform.
+     *
+     * @param resources The list of resources to sync.
+     * @param platfrom The platform.
+     *
+     * @return {@link org.hyperic.hq.hqapi1.types.ResponseStatus#SUCCESS} if the
+     * resources were synced successfully.
+     *
+     * @throws IOException If a network error occurs while making the request.
+     */
+    public StatusResponse syncResources(List<Resource> resources,Resource platfrom)
+        throws IOException
+    {
+        ResourcesRequest request = new ResourcesRequest();
+        request.getResource().addAll(resources);
+        request.setParent(platfrom);
+
+        return doPost("resource/sync.hqu", request, 
+                      new XmlResponseHandler<StatusResponse>(StatusResponse.class));
+    }
+
+    /**
      * Delete the given {@link Resource}.
      *
      * @param id The id of the {@link org.hyperic.hq.hqapi1.types.Resource} to delete.
