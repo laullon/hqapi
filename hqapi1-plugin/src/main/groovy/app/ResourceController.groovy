@@ -939,9 +939,16 @@ class ResourceController extends ApiController {
 
         def failureXml = null
         def syncRequest = new XmlParser().parseText(getPostData())
-
+        
+        def parent = null
+        def xmlParent = syncRequest['Parent']
+        if(xmlParent) {
+            def id = xmlParent.get(0).'@id'?.toInteger()
+            parent = resMan.findResourceById(id)
+        }
+        
         for (xmlResource in syncRequest['Resource']) {
-            failureXml = syncResource(xmlResource, syncRequest['Parent'])
+            failureXml = syncResource(xmlResource, parent)
             if (failureXml != null) {
                 break;
             }
